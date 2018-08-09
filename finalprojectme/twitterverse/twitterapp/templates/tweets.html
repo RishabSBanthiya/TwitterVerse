@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+{% block content %}
+    {% for sentiment in sentences  %}
+   <p> {{sentiment}} </p>
+
+    {% endfor %}
+    {% for result in results  %}
+
+    <li>{{result}} </li>
+
+    {% endfor %}
+
+{% endblock %}
+
+
+
+
+

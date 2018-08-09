@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<h3>Following</h3>
+{% for item in follow %}
+<li> <a href="{% url 'resultstrend' item.Phrases %}">{{item.Phrases}}  </a></li>
+{% endfor %}
+{% else %}
+<a href="/home" class="btn btn-outline-primary">Log in</a>To continue
+{% endif %}
+
+
+
+{% endblock %}

@@ -1,0 +1,26 @@
+<!-- templates/home.html-->
+{% extends 'index.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<h1 style="text-align:center;">Teams</h1>
+<table class="table">
+
+      <thead>
+    <tr>
+        <th scope="col">Teams</th>
+    </tr>
+     </thead>
+    {% for item in Teams %}
+    <tr scope="row">
+        <td>{{ item.Teams }}</td>
+        <td> <a href="{% url 'resultstrend' item.Teams %}" >Check out tweets </a></td>
+    </tr>
+
+
+
+    {% endfor %}
+
+{% endblock %}

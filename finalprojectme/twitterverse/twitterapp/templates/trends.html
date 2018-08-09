@@ -1,0 +1,8 @@
+{% extends 'index.html' %}
+{% block content %}
+<br> <h3>Trends:</h3>
+{% for name in names %}
+<li><a href="{% url 'results' %}">{{name}}</a></li>
+{% endfor %}
+{% endblock %}
+
