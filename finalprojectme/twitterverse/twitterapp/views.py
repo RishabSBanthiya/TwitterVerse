@@ -17,36 +17,27 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
-def addfollowing(request):
-     phrase=request.POST.get("phrase",False)
-     return render(request, "following.html")
 #-------------------------------------------------------------------------
-newsentences=[]
-sentences=[]
-sid = SentimentIntensityAnalyzer()
+newsentences=[]#The sentiments for the sentences
+sentences=[]# Results from the API search will be stored here
+sid = SentimentIntensityAnalyzer() #Used to find feelings
 #-------------------------------------------------------------------------
+#Twitter Dev Keys
 consumer_key = 'QLcDOtaD79Vc9zb6zc5vrqpVH'
 consumer_secret = 'Sl2GOvNBBegz6YNgIHIf2tQZLY8KXjzfyMVvjhgepsZ0gUaILW'
 access_token = '856096822619721728-AvtfUa0VvgnOucRAFzC4pqpva6EJe6B'
 access_token_secret = 'l1wbH8ACOFh7AZ8s4AI9cOnPdc2lnK7Gxsps33DFvMFis'
 #-------------------------------------------------------------------------
+#Setting auth for tweepy
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 #-------------------------------------------------------------------------
 api = tweepy.API(auth)
-trends1 = api.trends_place(1)
-data = trends1[0]
+#Get Trends from twitter
+trends = api.trends_place(1)
+data = trends[0]
 trends = data['trends']
 names = [trend['name'] for trend in trends]
-#-------------------------------------------------------------------------
-# class listener(StreamListener):
-
-#     def on_data(self, data):
-#         print(data)
-
-#     def on_error(self, status):
-#         print (status)
-# twitterStream = Stream(auth, listener())
 #-------------------------------------------------------------------------
 def index(request):
     # return res
@@ -124,7 +115,6 @@ def following(request):
     }
     return render(request, "following.html",context)
 #-------------------------------------------------------------------------
-#-------------------------------------------------------------------------
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -141,3 +131,10 @@ def signup(request):
 
 def view(request):
         return render(request, 'home.html')
+#-------------------------------------------------------------------------
+def followingadd(request):
+    # Get tweets from twitter devs
+    phrase=request.POST.get("phrase",False)
+    username = request.user.username
+    follow_instance = Following.objects.create(Username=username,Phrases=phrase)
+    return render(request, "add.html")

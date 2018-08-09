@@ -9,6 +9,16 @@
 <a href="/home" class="btn btn-outline-primary">Log in</a>To continue
 {% endif %}
 
+<form action="{% url 'addfollowing' %}" method="POST" >
+      {% csrf_token %}
+  <div class="form-group">
+    <label for="exampleInputEmail1">Add something to follow</label>
+    <input type="text" name="phrase" class="form-control" placeholder="Enter phrase">
+    <small class="form-text text-muted">Type in a phrase you want to follow</small>
+  </div>
+
+  <button type="submit" class="btn btn-outline-secondary">Submit</button>
+</form>
 
 
 {% endblock %}
